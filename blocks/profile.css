@@ -1,18 +1,19 @@
 .profile {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 40px 0 51px;
   align-items: center;
   align-content: center;
+  column-gap: 30px;
 }
 
 .profile__image {
   border-radius: 50%;
   width: 120px;
   height: 120px;
-  margin-right: 30px;
   object-fit: cover;
   background-position: center;
+  flex-shrink: 0;
 }
 
 .profile__info {
@@ -20,6 +21,7 @@
   grid-template-areas:
     "title button"
     "description description";
+  grid-template-columns: 1fr auto;
 }
 
 .profile__title {
@@ -42,6 +44,9 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .profile__edit-button {
@@ -72,6 +77,7 @@
   height: 50px;
   margin-left: auto;
   background-size: 22px 22px;
+  flex-shrink: 0;
 }
 
 .profile__add-button:hover {

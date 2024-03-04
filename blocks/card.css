@@ -22,7 +22,6 @@
 .card__title {
   margin: 0;
   padding: 0;
-  max-width: 210px;
   font-family: Inter, Arial, Helvetica, sans-serif;
   font-size: 24px;
   font-weight: 900;
@@ -39,6 +38,7 @@
   margin: 0;
   background-size: 21px 18px;
   border: none;
+  flex-shrink: 0;
 }
 
 .card__button:hover {
