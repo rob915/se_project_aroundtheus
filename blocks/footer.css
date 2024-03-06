@@ -7,14 +7,14 @@
   margin: 67px 0 60px;
 }
 
-@media screen and (min-width: 621px) and (max-width: 919px) {
+@media screen and (min-width: 619px) and (max-width: 879px) {
   .footer__copyright {
     width: 581px;
     margin: 58px auto 46px;
   }
 }
 
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 618px) {
   .footer__copyright {
     width: 282px;
     margin: 48px auto 36px;
