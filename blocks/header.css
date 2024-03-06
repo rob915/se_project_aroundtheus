@@ -11,14 +11,6 @@
   display: block;
 }
 
-.header__border {
-  border-bottom: solid;
-  border-width: 1px;
-  border-color: rgba(84, 84, 84, 0.7);
-  margin-left: -19px;
-  margin-right: -19px;
-}
-
 @media screen and (max-width: 618px) {
   .header {
     margin-top: 28px;
