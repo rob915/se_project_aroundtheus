@@ -115,6 +115,32 @@
       </footer>
     </div>
 
+    <div class="modal modal_opened">
+      <div class="modal__container">
+        <button class="modal__close"></button>
+        <form class="modal__form">
+          <fieldset class="modal__form_fieldset">
+            <h2 class="modal__heading">Edit Profile</h2>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              placeholder="Profile Name"
+              class="modal__input-title"
+            />
+            <input
+              type="text"
+              name="description"
+              id="description"
+              placeholder="Description"
+              class="modal__input-description"
+            />
+            <button type="submit" class="modal__button">Save</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
     <script src="./scripts/index.js"></script>
   </body>
 </html>
