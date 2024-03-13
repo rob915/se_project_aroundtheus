@@ -41,7 +41,7 @@
   height: 40px;
 }
 
-.modal__fieldset {
+.modal__form {
   margin: 0;
   padding: 36px;
   border: none;
@@ -113,7 +113,7 @@
     line-height: 22px;
   }
 
-  .modal__fieldset {
+  .modal__form {
     padding: 25px 22px;
   }
 
