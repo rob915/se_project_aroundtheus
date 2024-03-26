@@ -73,11 +73,11 @@
   line-height: 17px;
 }
 
-.modal__input_entry_title {
+.modal__input_name_title {
   margin-top: 54px;
 }
 
-.modal__input_entry_description {
+.modal__input_name_description {
   margin-top: 30px;
 }
 
@@ -121,13 +121,13 @@
     padding: 25px 22px;
   }
 
-  .modal__input_entry_title {
+  .modal__input_name_title {
     margin-top: 75px;
     font-size: 14px;
     line-height: 17px;
   }
 
-  .modal__input_entry_description {
+  .modal__input_name_description {
     margin-top: 30px;
     font-size: 14px;
     line-height: 17px;
