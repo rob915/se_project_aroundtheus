@@ -43,29 +43,31 @@
       </footer>
     </div>
 
-    <div class="profile__modal">
-      <div class="profile__modal-container">
-        <button class="profile__modal-close-button"></button>
-        <form class="profile__modal-form">
-          <h2 class="profile__modal-heading">Edit Profile</h2>
+    <div class="modal">
+      <div class="modal-container">
+        <button class="modal-close-button" type="button"></button>
+        <form class="modal-form">
+          <h2 class="modal-heading">Edit Profile</h2>
           <input
             type="text"
             name="title"
-            id="profile-title-input"
+            id="modal-input-title"
             placeholder="Name"
-            class="profile__modal-input-title"
+            class="modal-input modal-input_title-entry"
+            required
           />
           <input
             type="text"
             name="description"
-            id="profile-description-input"
+            id="modal-input-description"
             placeholder="About me"
-            class="profile__modal-input-description"
+            class="modal-input modal-input_description-entry"
+            required
           />
           <button
             type="submit"
-            class="profile__modal-save-button"
-            id="profile-modal-save-button"
+            class="modal-save-button"
+            id="modal-save-button"
           >
             Save
           </button>
