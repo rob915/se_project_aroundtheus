@@ -41,14 +41,14 @@ const initialCards = [
 const profileEditModal = document.querySelector(".modal");
 const profile = document.querySelector(".profile");
 const profileEditButton = profile.querySelector(".profile__edit-button");
-const modalCloseButton = profileEditModal.querySelector(".modal-close-button");
+const modalCloseButton = profileEditModal.querySelector(".modal__close-button");
 const profileTitle = profile.querySelector(".profile__title");
 const profileDescription = profile.querySelector(".profile__description");
 const profileTitleInput = document.querySelector("#modal-input-title");
 const profileDescriptionInput = document.querySelector(
   "#modal-input-description"
 );
-const profileEditForm = profileEditModal.querySelector(".modal-form");
+const profileEditForm = profileEditModal.querySelector(".modal__form");
 const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;

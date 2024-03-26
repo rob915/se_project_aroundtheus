@@ -14,7 +14,7 @@
   display: flex;
 }
 
-.modal-container {
+.modal__container {
   display: flex;
   flex-direction: column;
   width: 430px;
@@ -25,7 +25,7 @@
   margin: auto;
 }
 
-.modal-close-button {
+.modal__close-button {
   background: url(../images/close-icon.svg);
   border: none;
   background-size: contain;
@@ -40,18 +40,18 @@
   height: 40px;
 }
 
-.modal-close-button:hover {
+.modal__close-button:hover {
   opacity: 0.6;
   transition: 0.5s ease;
 }
 
-.modal-form {
+.modal__form {
   margin: 0;
   padding: 36px;
   border: none;
 }
 
-.modal-heading {
+.modal__heading {
   margin: 0;
   padding: 0;
   font-family: Inter, Arial, Helvetica, sans-serif;
@@ -60,12 +60,12 @@
   line-height: 29px;
 }
 
-.modal-input {
+.modal__input {
   display: block;
   width: 100%;
   height: 27px;
   border: none;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   font-family: Inter, Arial, Helvetica, sans-serif;
   font-size: 14px;
@@ -73,15 +73,15 @@
   line-height: 17px;
 }
 
-.modal-input_title-entry {
+.modal__input_entry_title {
   margin-top: 54px;
 }
 
-.modal-input_description-entry {
+.modal__input_entry_description {
   margin-top: 30px;
 }
 
-.modal-save-button {
+.modal__save-button {
   margin-top: 48px;
   width: 100%;
   height: 50px;
@@ -95,16 +95,16 @@
   line-height: 22px;
 }
 
-.modal-save-button:hover {
+.modal__save-button:hover {
   opacity: 0.8;
   transition: 0.5s ease;
 }
 
 @media screen and (max-width: 618px) {
-  .modal-container {
+  .modal__container {
     width: 282px;
   }
-  .modal-close-button {
+  .modal__close-button {
     height: 26px;
     width: 26px;
     bottom: calc(100% + 17px);
@@ -112,28 +112,28 @@
     right: 0;
   }
 
-  .modal-heading {
+  .modal__heading {
     font-size: 18px;
     line-height: 22px;
   }
 
-  .modal-form {
+  .modal__form {
     padding: 25px 22px;
   }
 
-  .modal-input_title-entry {
+  .modal__input_entry_title {
     margin-top: 75px;
     font-size: 14px;
     line-height: 17px;
   }
 
-  .modal-input_description-entry {
+  .modal__input_entry_description {
     margin-top: 30px;
     font-size: 14px;
     line-height: 17px;
   }
 
-  .modal-save-button {
+  .modal__save-button {
     margin-top: 45px;
     height: 46px;
     font-size: 14px;
