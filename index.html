@@ -15,7 +15,6 @@
           alt="Around the US Logo"
           class="header__logo"
         />
-        <!-- <div class="header__border"></div> -->
       </header>
 
       <main class="content">
@@ -31,7 +30,11 @@
             <p class="profile__description">Explorer</p>
           </div>
 
-          <button class="profile__add-button" type="button"></button>
+          <button
+            class="profile__add-card-button"
+            type="button"
+            id="card-add-button"
+          ></button>
         </section>
 
         <section class="cards page__section">
@@ -43,15 +46,21 @@
       </footer>
     </div>
 
-    <div class="modal">
+    <div class="modal" id="profile-edit">
       <div class="modal__container">
-        <button class="modal__close-button" type="button"></button>
-        <form class="modal__form">
-          <h2 class="modal__heading">Edit Profile</h2>
+        <button
+          class="modal__close-button"
+          type="button"
+          id="profile-edit-close-button"
+        ></button>
+        <form class="modal__form" id="profile-edit-form">
+          <h2 class="modal__heading" id="profile-edit-modal-heading">
+            Edit Profile
+          </h2>
           <input
             type="text"
             name="title"
-            id="modal-input-title"
+            id="profile-edit-title-input"
             placeholder="Name"
             class="modal__input modal__input_name_title"
             required
@@ -59,7 +68,7 @@
           <input
             type="text"
             name="description"
-            id="modal-input-description"
+            id="profile-edit-description-input"
             placeholder="About me"
             class="modal__input modal__input_name_description"
             required
@@ -74,6 +83,43 @@
         </form>
       </div>
     </div>
+
+    <div class="modal" id="card-add">
+      <div class="modal__container">
+        <button
+          class="modal__close-button"
+          type="button"
+          id="card-add-close-button"
+        ></button>
+        <form class="modal__form" id="card-add-form">
+          <h2 class="modal__heading" id="card-add-heading">New Place</h2>
+          <input
+            type="text"
+            name="title"
+            id="card-add-title-input"
+            placeholder="Title"
+            class="modal__input modal__input_name_title"
+            required
+          />
+          <input
+            type="text"
+            name="description"
+            id="profile-add-link-input"
+            placeholder="Image link"
+            class="modal__input modal__input_name_description"
+            required
+          />
+          <button
+            type="submit"
+            class="modal__save-button"
+            id="card-add-save-button"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+
     <template id="card-template">
       <li class="card">
         <img src="" alt="" class="card__image" />

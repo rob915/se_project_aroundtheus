@@ -38,26 +38,43 @@ const initialCards = [
 // ! ||                                    Elements                                    ||
 // ! ||--------------------------------------------------------------------------------||
 
-const profileEditModal = document.querySelector(".modal");
 const profile = document.querySelector(".profile");
 const profileEditButton = profile.querySelector(".profile__edit-button");
-const modalCloseButton = profileEditModal.querySelector(".modal__close-button");
+const profileAddButton = profile.querySelector(".profile__add-button");
 const profileTitle = profile.querySelector(".profile__title");
 const profileDescription = profile.querySelector(".profile__description");
-const profileTitleInput = document.querySelector("#modal-input-title");
-const profileDescriptionInput = document.querySelector(
-  "#modal-input-description"
-);
-const profileEditForm = profileEditModal.querySelector(".modal__form");
+
 const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
+const cardAddButton = profile.querySelector("#card-add-button");
+
+const profileEdit = document.querySelector("#profile-edit");
+const profileEditCloseButton = profileEdit.querySelector(
+  "#profile-edit-close-button"
+);
+const profileEditForm = profileEdit.querySelector("#profile-edit-form");
+const profileTitleInput = document.querySelector("#profile-edit-title-input");
+const profileDescriptionInput = document.querySelector(
+  "#profile-edit-description-input"
+);
+
+const cardAdd = document.querySelector("#card-add");
+const cardAddForm = cardAdd.querySelector("#card-add-form");
+const cardTitleInput = cardAdd.querySelector("#card-add-input-title");
+const cardImageInput = cardAdd.querySelector("#card-add-input-image");
+const cardAddCloseButton = cardAdd.querySelector("#card-add-close-button");
+
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                   Functions                                    ||
 // ! ||--------------------------------------------------------------------------------||
 
 function closePopup() {
-  profileEditModal.classList.remove("modal_opened");
+  profileEdit.classList.remove("modal_opened");
+}
+
+function closeAddPopup() {
+  cardAdd.classList.remove("modal_opened");
 }
 
 function getCardElement(cardData) {
@@ -80,9 +97,12 @@ function fillProfileForm() {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
 
-  profileEditModal.classList.add("modal_opened");
+  profileEdit.classList.add("modal_opened");
 }
 
+function openCardAdd() {
+  cardAdd.classList.add("modal_opened");
+}
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                 Event Handlers                                 ||
 // ! ||--------------------------------------------------------------------------------||
@@ -100,9 +120,13 @@ function handleProfileEditSubmit(e) {
 
 profileEditButton.addEventListener("click", fillProfileForm);
 
-modalCloseButton.addEventListener("click", closePopup);
+profileEditCloseButton.addEventListener("click", closePopup);
 
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
+
+cardAddButton.addEventListener("click", openCardAdd);
+
+cardAddCloseButton.addEventListener("click", closeAddPopup);
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                     Loops                                      ||
