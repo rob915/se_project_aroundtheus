@@ -40,7 +40,6 @@ const initialCards = [
 
 const profile = document.querySelector(".profile");
 const profileEditButton = profile.querySelector(".profile__edit-button");
-const profileAddButton = profile.querySelector(".profile__add-button");
 const profileTitle = profile.querySelector(".profile__title");
 const profileDescription = profile.querySelector(".profile__description");
 
@@ -61,20 +60,20 @@ const profileDescriptionInput = document.querySelector(
 
 const cardAdd = document.querySelector("#card-add");
 const cardAddForm = cardAdd.querySelector("#card-add-form");
-const cardTitleInput = cardAdd.querySelector("#card-add-input-title");
-const cardImageInput = cardAdd.querySelector("#card-add-input-image");
+const cardTitleInput = cardAdd.querySelector("#card-add-title-input");
+const cardImageInput = cardAdd.querySelector("#card-add-link-input");
 const cardAddCloseButton = cardAdd.querySelector("#card-add-close-button");
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                   Functions                                    ||
 // ! ||--------------------------------------------------------------------------------||
 
-function closePopup() {
-  profileEdit.classList.remove("modal_opened");
+function openModal(modal) {
+  modal.classList.add("modal_opened");
 }
 
-function closeAddPopup() {
-  cardAdd.classList.remove("modal_opened");
+function closeModal(modal) {
+  modal = modal.classList.remove("modal_opened");
 }
 
 function getCardElement(cardData) {
@@ -93,16 +92,37 @@ function getCardElement(cardData) {
   return cardElement;
 }
 
+function getNewCardData(cardData) {
+  // clone the template element with all its content and store it in a cardElement variable
+  const cardElement = cardTemplate.cloneNode(true);
+  // access the card title and image and store them in variables
+  const cardImageEl = cardElement.querySelector(".card__image");
+  const cardTitleEl = cardElement.querySelector(".card__title");
+  // set the path to the image to the link field of the object
+  cardImageEl.src = cardData.link;
+  // set the image alt text to the name field of the object
+  cardImageEl.alt = cardData.name;
+  // set the card title to the name field of the object, too
+  cardTitleEl.textContent = cardData.name;
+  return cardElement;
+}
+
+function renderCard(cardElement, container) {
+  // return the ready HTML element with the filled-in data
+  container.prepend(cardElement);
+}
+
 function fillProfileForm() {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
 
-  profileEdit.classList.add("modal_opened");
+  openModal(profileEdit);
 }
 
-function openCardAdd() {
-  cardAdd.classList.add("modal_opened");
-}
+// function openCardAdd() {
+//   cardAdd.classList.add("modal_opened");
+// }
+
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                 Event Handlers                                 ||
 // ! ||--------------------------------------------------------------------------------||
@@ -111,7 +131,26 @@ function handleProfileEditSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
-  closePopup();
+  closeModal(profileEdit);
+}
+
+function handleCardAddSubmit(e) {
+  e.preventDefault();
+
+  const newTitle = cardTitleInput.value;
+  const newLink = cardImageInput.value;
+  const newCardData = getNewCardData({
+    name: newTitle,
+    link: newLink,
+  });
+
+  renderCard(newCardData, cardListEl);
+  // getNewCardData({
+  //   name: newTitle,
+  //   link: newLink,
+  // });
+
+  closeModal(cardAdd);
 }
 
 // ! ||--------------------------------------------------------------------------------||
@@ -120,13 +159,15 @@ function handleProfileEditSubmit(e) {
 
 profileEditButton.addEventListener("click", fillProfileForm);
 
-profileEditCloseButton.addEventListener("click", closePopup);
+profileEditCloseButton.addEventListener("click", () => closeModal(profileEdit));
 
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
-cardAddButton.addEventListener("click", openCardAdd);
+cardAddButton.addEventListener("click", () => openModal(cardAdd));
 
-cardAddCloseButton.addEventListener("click", closeAddPopup);
+cardAddCloseButton.addEventListener("click", () => closeModal(cardAdd));
+
+cardAddForm.addEventListener("submit", handleCardAddSubmit);
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                     Loops                                      ||
@@ -136,3 +177,7 @@ initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListEl.prepend(cardElement);
 });
+
+// Torrent Mountains link: https://cdn.pixabay.com/photo/2023/12/06/08/41/mountain-8433234_1280.jpg
+// Hunter Peak link: https://cdn.pixabay.com/photo/2024/02/12/16/05/hunter-peak-8568915_1280.jpg
+// Keysville link: https://cdn.pixabay.com/photo/2023/08/22/21/18/mountain-8207212_1280.jpg
