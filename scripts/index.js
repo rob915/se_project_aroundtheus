@@ -64,6 +64,12 @@ const cardTitleInput = cardAdd.querySelector("#card-add-title-input");
 const cardImageInput = cardAdd.querySelector("#card-add-link-input");
 const cardAddCloseButton = cardAdd.querySelector("#card-add-close-button");
 
+const imageModal = document.querySelector("#image-modal");
+const imageModalClsBtn = imageModal.querySelector("#image-modal-close-btn");
+
+const imageModalImage = imageModal.querySelector("#image-modal-image");
+const imageModalSubText = imageModal.querySelector("#image-modal-sub-text");
+
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                   Functions                                    ||
 // ! ||--------------------------------------------------------------------------------||
@@ -73,37 +79,39 @@ function openModal(modal) {
 }
 
 function closeModal(modal) {
-  modal = modal.classList.remove("modal_opened");
+  modal.classList.remove("modal_opened");
 }
 
-function getCardElement(cardData) {
+function trashCard(e) {
+  e.currentTarget.parentElement.remove();
+}
+
+function likeToggle(e) {
+  e.currentTarget.classList.toggle("card__button_active");
+}
+
+function getCardData(cardData) {
   // clone the template element with all its content and store it in a cardElement variable
   const cardElement = cardTemplate.cloneNode(true);
   // access the card title and image and store them in variables
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
+  const trashBtnEl = cardElement.querySelector(".card__button-trash");
+  const likeBtnEl = cardElement.querySelector(".card__button");
+
   // set the path to the image to the link field of the object
   cardImageEl.src = cardData.link;
   // set the image alt text to the name field of the object
   cardImageEl.alt = cardData.name;
   // set the card title to the name field of the object, too
   cardTitleEl.textContent = cardData.name;
-  // return the ready HTML element with the filled-in data
-  return cardElement;
-}
+  // add event listener to toggle class for like button
+  likeBtnEl.addEventListener("click", likeToggle);
+  // add event listener to remove card
+  trashBtnEl.addEventListener("click", trashCard);
+  // add event listener to card image
+  cardImageEl.addEventListener("click", () => fillImageModal(cardData));
 
-function getNewCardData(cardData) {
-  // clone the template element with all its content and store it in a cardElement variable
-  const cardElement = cardTemplate.cloneNode(true);
-  // access the card title and image and store them in variables
-  const cardImageEl = cardElement.querySelector(".card__image");
-  const cardTitleEl = cardElement.querySelector(".card__title");
-  // set the path to the image to the link field of the object
-  cardImageEl.src = cardData.link;
-  // set the image alt text to the name field of the object
-  cardImageEl.alt = cardData.name;
-  // set the card title to the name field of the object, too
-  cardTitleEl.textContent = cardData.name;
   return cardElement;
 }
 
@@ -118,6 +126,18 @@ function fillProfileForm() {
 
   openModal(profileEdit);
 }
+function fillImageModal(cardData) {
+  imageModalImage.src = cardData.link;
+  imageModalSubText.textContent = cardData.currentTarget.name;
+
+  openModal(imageModal);
+}
+
+// IMAGE MODAL NEEDS TO PRELOAD IMAGE AND INFO
+
+// function likeButtonFilled() {
+//   cardButton.classList.add("card__button");
+// }
 
 // function openCardAdd() {
 //   cardAdd.classList.add("modal_opened");
@@ -139,13 +159,13 @@ function handleCardAddSubmit(e) {
 
   const newTitle = cardTitleInput.value;
   const newLink = cardImageInput.value;
-  const newCardData = getNewCardData({
+  const newCardData = getCardData({
     name: newTitle,
     link: newLink,
   });
 
   renderCard(newCardData, cardListEl);
-  // getNewCardData({
+  // getCardData({
   //   name: newTitle,
   //   link: newLink,
   // });
@@ -169,12 +189,15 @@ cardAddCloseButton.addEventListener("click", () => closeModal(cardAdd));
 
 cardAddForm.addEventListener("submit", handleCardAddSubmit);
 
+imageModalClsBtn.addEventListener("click", () => closeModal(imageModal));
+// cardButton.addEventListener("click", likeButtonFilled);
+
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                     Loops                                      ||
 // ! ||--------------------------------------------------------------------------------||
 
 initialCards.forEach((cardData) => {
-  const cardElement = getCardElement(cardData);
+  const cardElement = getCardData(cardData);
   cardListEl.prepend(cardElement);
 });
 

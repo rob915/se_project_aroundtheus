@@ -25,7 +25,7 @@
             class="profile__image"
           />
           <div class="profile__info">
-            <h1 class="profile__title">Jaques Costeau</h1>
+            <h1 class="profile__title">Jacques Costeau</h1>
             <button class="profile__edit-button" type="button"></button>
             <p class="profile__description">Explorer</p>
           </div>
@@ -120,8 +120,21 @@
       </div>
     </div>
 
+    <div class="modal" id="image-modal">
+      <div class="modal__container modal__container-image">
+        <button
+          class="modal__close-button modal__close-btn-image"
+          type="button"
+          id="image-modal-close-btn"
+        ></button>
+        <img src="" alt="" class="modal__image" id="image-modal-image" />
+        <p class="modal__sub-header" id="image-modal-sub-text"></p>
+      </div>
+    </div>
+
     <template id="card-template">
       <li class="card">
+        <button class="card__button-trash" type="button"></button>
         <img src="" alt="" class="card__image" />
         <div class="card__description">
           <h2 class="card__title"></h2>

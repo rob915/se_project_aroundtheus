@@ -1,8 +1,21 @@
 .card {
+  position: relative;
   background-color: white;
   color: black;
   border-radius: 10px;
   overflow: hidden;
+  border: none;
+}
+
+.card__button-trash {
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  background: transparent url(../images/Trash.svg) center no-repeat;
+  width: 18px;
+  height: 19.3px;
+  margin: 0;
+  background-size: 19px 20px;
   border: none;
 }
 
@@ -32,13 +45,17 @@
 }
 
 .card__button {
-  background: transparent url(../images/heart.svg) center no-repeat;
+  background: transparent url(../images/like-inactive.svg) center no-repeat;
   width: 21px;
   height: 18px;
   margin: 0;
   background-size: 21px 18px;
   border: none;
   flex-shrink: 0;
+}
+
+.card__button_active {
+  background: transparent url(../images/like-active.svg) center no-repeat;
 }
 
 .card__button:hover {
