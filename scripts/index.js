@@ -82,11 +82,11 @@ function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 
-function trashCard(e) {
+function deleteCard(e) {
   e.currentTarget.parentElement.remove();
 }
 
-function likeToggle(e) {
+function toggleLike(e) {
   e.currentTarget.classList.toggle("card__button_active");
 }
 
@@ -106,9 +106,9 @@ function getCardData(cardData) {
   // set the card title to the name field of the object, too
   cardTitleEl.textContent = cardData.name;
   // add event listener to toggle class for like button
-  likeBtnEl.addEventListener("click", likeToggle);
+  likeBtnEl.addEventListener("click", toggleLike);
   // add event listener to remove card
-  trashBtnEl.addEventListener("click", trashCard);
+  trashBtnEl.addEventListener("click", deleteCard);
   // add event listener to card image
   cardImageEl.addEventListener("click", () => fillImageModal(cardData));
 
@@ -120,7 +120,7 @@ function renderCard(cardElement, container) {
   container.prepend(cardElement);
 }
 
-function fillProfileForm() {
+function openProfileForm() {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
 
@@ -128,7 +128,8 @@ function fillProfileForm() {
 }
 function fillImageModal(cardData) {
   imageModalImage.src = cardData.link;
-  imageModalSubText.textContent = cardData.currentTarget.name;
+  imageModalSubText.textContent = cardData.name;
+  imageModalImage.alt = `Photo of ${cardData.name}`;
 
   openModal(imageModal);
 }
@@ -171,13 +172,15 @@ function handleCardAddSubmit(e) {
   // });
 
   closeModal(cardAdd);
+
+  cardAddForm.reset();
 }
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                 Event Listeners                                ||
 // ! ||--------------------------------------------------------------------------------||
 
-profileEditButton.addEventListener("click", fillProfileForm);
+profileEditButton.addEventListener("click", openProfileForm);
 
 profileEditCloseButton.addEventListener("click", () => closeModal(profileEdit));
 
