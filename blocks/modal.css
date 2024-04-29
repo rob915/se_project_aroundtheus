@@ -67,6 +67,27 @@
   border: none;
 }
 
+.modal__form-error-msg {
+  background: transparent;
+  color: rgba(255, 0, 0, 1);
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+}
+
+.modal-input-error {
+  color: rgba(255, 0, 0, 1);
+}
+
+.modal-error-visible {
+  visibility: visible;
+}
+
+.modal-error-hidden {
+  visibility: hidden;
+}
+
 .modal__heading {
   margin: 0;
   padding: 0;
@@ -109,6 +130,12 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 22px;
+}
+
+.modal__save-button_disabled {
+  opacity: 0.2;
+  color: #fff;
+  background-color: #000;
 }
 
 .modal__save-button:hover {
