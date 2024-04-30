@@ -76,9 +76,13 @@ const imageModalSubText = imageModal.querySelector("#image-modal-sub-text");
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  modal.addEventListener("mousedown", closeModalOnRemoteClick);
+  document.addEventListener("keydown", closeModalEsc);
 }
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  modal.removeEventListener("mousedown", closeModalOnRemoteClick);
+  document.removeEventListener("keydown", closeModalEsc);
 }
 function deleteCard(e) {
   e.currentTarget.parentElement.remove();
@@ -125,6 +129,21 @@ function fillImageModal(cardData) {
   openModal(imageModal);
 }
 
+function closeModalOnRemoteClick(evt) {
+  if (
+    evt.target === evt.currentTarget ||
+    evt.target.classList.contains("modal__close")
+  ) {
+    closeModal(evt.target);
+  }
+}
+
+function closeModalEsc(evt) {
+  if (evt.key === "Escape") {
+    closeModal(document.querySelector(".modal_opened"));
+  }
+}
+
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                 Event Handlers                                 ||
 // ! ||--------------------------------------------------------------------------------||
@@ -147,7 +166,7 @@ function handleCardAddSubmit(e) {
   renderCard(newCardData, cardListEl);
   closeModal(cardAdd);
   cardAddForm.reset();
-  cardAddSaveButton.classList.add("modal__save-button_disabled");
+  disableSubmitButton(cardAddSaveButton, config);
 }
 
 // ! ||--------------------------------------------------------------------------------||
@@ -161,15 +180,6 @@ cardAddButton.addEventListener("click", () => openModal(cardAdd));
 cardAddCloseButton.addEventListener("click", () => closeModal(cardAdd));
 cardAddForm.addEventListener("submit", handleCardAddSubmit);
 imageModalClsBtn.addEventListener("click", () => closeModal(imageModal));
-profileEdit.addEventListener("mousedown", (evt) => {
-  if (evt.target.classList.contains("modal")) closeModal(profileEdit);
-});
-cardAdd.addEventListener("mousedown", (evt) => {
-  if (evt.target.classList.contains("modal")) closeModal(cardAdd);
-});
-imageModal.addEventListener("mousedown", (evt) => {
-  if (evt.target.classList.contains("modal")) closeModal(imageModal);
-});
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                     Loops                                      ||
