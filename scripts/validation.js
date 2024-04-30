@@ -59,23 +59,7 @@ const enableValidation = (options) => {
     formEl.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
-
     setEventListeners(formEl, options);
-    // Look for inputs inside of form
-    // const inputEls = ;
-    // Loop through all of the inputs to see if all are valid
-    // inputEls.forEach((inputEl) => {
-    //   if (!inputEl.validity.valid) {
-    //   }
-    // });
-    // if input is not valid
-    // grab the vaildation message
-    // add error class to input
-    // display error message
-    // disable button
-    // if all inputs are valid
-    // enable button
-    // reset error message
   });
 };
 

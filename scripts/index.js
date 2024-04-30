@@ -35,7 +35,7 @@ const initialCards = [
 ];
 
 // ! ||--------------------------------------------------------------------------------||
-// ! ||                                    Elements                                    ||
+// ! ||                            Global variables                                    ||
 // ! ||--------------------------------------------------------------------------------||
 
 const profile = document.querySelector(".profile");
@@ -63,10 +63,10 @@ const cardAddForm = cardAdd.querySelector("#card-add-form");
 const cardTitleInput = cardAdd.querySelector("#card-add-title-input");
 const cardImageInput = cardAdd.querySelector("#card-add-link-input");
 const cardAddCloseButton = cardAdd.querySelector("#card-add-close-button");
+const cardAddSaveButton = cardAdd.querySelector("#card-add-save-button");
 
 const imageModal = document.querySelector("#image-modal");
 const imageModalClsBtn = imageModal.querySelector("#image-modal-close-btn");
-
 const imageModalImage = imageModal.querySelector("#image-modal-image");
 const imageModalSubText = imageModal.querySelector("#image-modal-sub-text");
 
@@ -77,15 +77,12 @@ const imageModalSubText = imageModal.querySelector("#image-modal-sub-text");
 function openModal(modal) {
   modal.classList.add("modal_opened");
 }
-
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
-
 function deleteCard(e) {
   e.currentTarget.parentElement.remove();
 }
-
 function toggleLike(e) {
   e.currentTarget.classList.toggle("card__button_active");
 }
@@ -98,7 +95,6 @@ function getCardData(cardData) {
   const cardTitleEl = cardElement.querySelector(".card__title");
   const trashBtnEl = cardElement.querySelector(".card__button-trash");
   const likeBtnEl = cardElement.querySelector(".card__button");
-
   // set the path to the image to the link field of the object
   cardImageEl.src = cardData.link;
   // set the image alt text to the name field of the object
@@ -111,38 +107,23 @@ function getCardData(cardData) {
   trashBtnEl.addEventListener("click", deleteCard);
   // add event listener to card image
   cardImageEl.addEventListener("click", () => fillImageModal(cardData));
-
   return cardElement;
 }
 
 function renderCard(cardElement, container) {
-  // return the ready HTML element with the filled-in data
   container.prepend(cardElement);
 }
-
 function openProfileForm() {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-
   openModal(profileEdit);
 }
 function fillImageModal(cardData) {
   imageModalImage.src = cardData.link;
   imageModalSubText.textContent = cardData.name;
   imageModalImage.alt = `Photo of ${cardData.name}`;
-
   openModal(imageModal);
 }
-
-// IMAGE MODAL NEEDS TO PRELOAD IMAGE AND INFO
-
-// function likeButtonFilled() {
-//   cardButton.classList.add("card__button");
-// }
-
-// function openCardAdd() {
-//   cardAdd.classList.add("modal_opened");
-// }
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                 Event Handlers                                 ||
@@ -157,23 +138,16 @@ function handleProfileEditSubmit(e) {
 
 function handleCardAddSubmit(e) {
   e.preventDefault();
-
   const newTitle = cardTitleInput.value;
   const newLink = cardImageInput.value;
   const newCardData = getCardData({
     name: newTitle,
     link: newLink,
   });
-
   renderCard(newCardData, cardListEl);
-  // getCardData({
-  //   name: newTitle,
-  //   link: newLink,
-  // });
-
   closeModal(cardAdd);
-
   cardAddForm.reset();
+  cardAddSaveButton.classList.add("modal__save-button_disabled");
 }
 
 // ! ||--------------------------------------------------------------------------------||
@@ -181,19 +155,21 @@ function handleCardAddSubmit(e) {
 // ! ||--------------------------------------------------------------------------------||
 
 profileEditButton.addEventListener("click", openProfileForm);
-
 profileEditCloseButton.addEventListener("click", () => closeModal(profileEdit));
-
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
-
 cardAddButton.addEventListener("click", () => openModal(cardAdd));
-
 cardAddCloseButton.addEventListener("click", () => closeModal(cardAdd));
-
 cardAddForm.addEventListener("submit", handleCardAddSubmit);
-
 imageModalClsBtn.addEventListener("click", () => closeModal(imageModal));
-// cardButton.addEventListener("click", likeButtonFilled);
+profileEdit.addEventListener("mousedown", (evt) => {
+  if (evt.target.classList.contains("modal")) closeModal(profileEdit);
+});
+cardAdd.addEventListener("mousedown", (evt) => {
+  if (evt.target.classList.contains("modal")) closeModal(cardAdd);
+});
+imageModal.addEventListener("mousedown", (evt) => {
+  if (evt.target.classList.contains("modal")) closeModal(imageModal);
+});
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                     Loops                                      ||
@@ -203,6 +179,10 @@ initialCards.forEach((cardData) => {
   const cardElement = getCardData(cardData);
   cardListEl.prepend(cardElement);
 });
+
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                              Random Mountain Links                             ||
+// ! ||--------------------------------------------------------------------------------||
 
 // Torrent Mountains link: https://cdn.pixabay.com/photo/2023/12/06/08/41/mountain-8433234_1280.jpg
 // Hunter Peak link: https://cdn.pixabay.com/photo/2024/02/12/16/05/hunter-peak-8568915_1280.jpg
