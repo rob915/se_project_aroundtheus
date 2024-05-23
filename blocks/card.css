@@ -59,7 +59,7 @@
   overflow: hidden;
 }
 
-.card__button {
+.card__button-like {
   background: transparent url(../images/like-inactive.svg) center no-repeat;
   width: 21px;
   height: 18px;
@@ -69,11 +69,11 @@
   flex-shrink: 0;
 }
 
-.card__button_active {
+.card__button-like_active {
   background: transparent url(../images/like-active.svg) center no-repeat;
 }
 
-.card__button:hover {
+.card__button-like:hover {
   opacity: 0.5;
   transition: 0.5s ease;
   cursor: pointer;

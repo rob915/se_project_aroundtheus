@@ -1,3 +1,6 @@
+import Card from "../components/card.js";
+import FormValidator from "../components/FormVaildator.js";
+
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                 Card Data Array                                ||
 // ! ||--------------------------------------------------------------------------------||
@@ -71,6 +74,25 @@ const imageModalImage = imageModal.querySelector("#image-modal-image");
 const imageModalSubText = imageModal.querySelector("#image-modal-sub-text");
 
 // ! ||--------------------------------------------------------------------------------||
+// ! ||                                   Validation                                   ||
+// ! ||--------------------------------------------------------------------------------||
+
+const validationSettings = {
+  inputSelector: ".js-modal-input",
+  submitButtonSelector: ".modal__save-button",
+  inactiveButtonClass: "modal__save-button_disabled",
+  inputErrorClass: "modal-input-error",
+  errorClass: "modal-error-visible",
+};
+
+const editFormVaildator = new FormValidator(
+  validationSettings,
+  profileEditForm
+);
+editFormVaildator.enableValidation();
+const addFormVaildator = new FormValidator(validationSettings, cardAddForm);
+addFormVaildator.enableValidation();
+// ! ||--------------------------------------------------------------------------------||
 // ! ||                                   Functions                                    ||
 // ! ||--------------------------------------------------------------------------------||
 
@@ -84,34 +106,16 @@ function closeModal(modal) {
   modal.removeEventListener("mousedown", closeModalOnRemoteClick);
   document.removeEventListener("keydown", closeModalEsc);
 }
-function deleteCard(e) {
-  e.currentTarget.parentElement.remove();
-}
-function toggleLike(e) {
-  e.currentTarget.classList.toggle("card__button_active");
-}
+// function deleteCard(e) {
+//   e.currentTarget.parentElement.remove();
+// }
+// function toggleLike(e) {
+//   e.currentTarget.classList.toggle("card__button-like_active");
+// }
 
 function getCardData(cardData) {
-  // clone the template element with all its content and store it in a cardElement variable
-  const cardElement = cardTemplate.cloneNode(true);
-  // access the card title and image and store them in variables
-  const cardImageEl = cardElement.querySelector(".card__image");
-  const cardTitleEl = cardElement.querySelector(".card__title");
-  const trashBtnEl = cardElement.querySelector(".card__button-trash");
-  const likeBtnEl = cardElement.querySelector(".card__button");
-  // set the path to the image to the link field of the object
-  cardImageEl.src = cardData.link;
-  // set the image alt text to the name field of the object
-  cardImageEl.alt = cardData.name;
-  // set the card title to the name field of the object, too
-  cardTitleEl.textContent = cardData.name;
-  // add event listener to toggle class for like button
-  likeBtnEl.addEventListener("click", toggleLike);
-  // add event listener to remove card
-  trashBtnEl.addEventListener("click", deleteCard);
-  // add event listener to card image
-  cardImageEl.addEventListener("click", () => fillImageModal(cardData));
-  return cardElement;
+  const card = new Card(cardData, cardListEl, fillImageModal);
+  return card.getView();
 }
 
 function renderCard(cardElement, container) {
@@ -166,7 +170,7 @@ function handleCardAddSubmit(e) {
   renderCard(newCardData, cardListEl);
   closeModal(cardAdd);
   cardAddForm.reset();
-  disableSubmitButton(cardAddSaveButton, config);
+  addFormVaildator.toggleButtonState();
 }
 
 // ! ||--------------------------------------------------------------------------------||
@@ -197,3 +201,5 @@ initialCards.forEach((cardData) => {
 // Torrent Mountains link: https://cdn.pixabay.com/photo/2023/12/06/08/41/mountain-8433234_1280.jpg
 // Hunter Peak link: https://cdn.pixabay.com/photo/2024/02/12/16/05/hunter-peak-8568915_1280.jpg
 // Keysville link: https://cdn.pixabay.com/photo/2023/08/22/21/18/mountain-8207212_1280.jpg
+
+// const editFormVaildator = new FormValidator(config, profileEditForm);
