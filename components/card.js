@@ -7,14 +7,11 @@ export default class Card {
   }
 
   _setEventListeners() {
-    // ".card__button-like"
     this._cardElement
       .querySelector(".card__button-like")
       .addEventListener("click", () => {
         this._handleLikeIcon();
       });
-
-    // ".card__button-trash"
     this._cardElement
       .querySelector(".card__button-trash")
       .addEventListener("click", () => {
@@ -37,7 +34,6 @@ export default class Card {
   }
 
   getView() {
-    // get the card view
     this._cardElement = document
       .querySelector("#card-template")
       .content.querySelector(".card")

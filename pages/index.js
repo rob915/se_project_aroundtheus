@@ -92,6 +92,7 @@ const editFormVaildator = new FormValidator(
 editFormVaildator.enableValidation();
 const addFormVaildator = new FormValidator(validationSettings, cardAddForm);
 addFormVaildator.enableValidation();
+
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                   Functions                                    ||
 // ! ||--------------------------------------------------------------------------------||
@@ -106,12 +107,6 @@ function closeModal(modal) {
   modal.removeEventListener("mousedown", closeModalOnRemoteClick);
   document.removeEventListener("keydown", closeModalEsc);
 }
-// function deleteCard(e) {
-//   e.currentTarget.parentElement.remove();
-// }
-// function toggleLike(e) {
-//   e.currentTarget.classList.toggle("card__button-like_active");
-// }
 
 function getCardData(cardData) {
   const card = new Card(cardData, cardListEl, fillImageModal);
@@ -170,7 +165,7 @@ function handleCardAddSubmit(e) {
   renderCard(newCardData, cardListEl);
   closeModal(cardAdd);
   cardAddForm.reset();
-  addFormVaildator.toggleButtonState();
+  addFormVaildator.resetValidation();
 }
 
 // ! ||--------------------------------------------------------------------------------||
