@@ -51,13 +51,6 @@ export default class FormValidator {
     this._enableSubmitButton();
   }
 
-  resetValidation() {
-    this._inputEls.forEach((input) => {
-      this._hideInputError(input);
-    });
-    this._toggleButtonState();
-  }
-
   _setEventListeners() {
     this._inputEls = [...this._form.querySelectorAll(".js-modal-input")];
     this._submitButton = this._form.querySelector(".modal__save-button");
@@ -67,6 +60,13 @@ export default class FormValidator {
         this._toggleButtonState(this._inputEls);
       });
     });
+  }
+
+  resetValidation() {
+    this._inputEls.forEach((input) => {
+      this._hideInputError(input);
+    });
+    this._toggleButtonState();
   }
 
   enableValidation() {

@@ -38,20 +38,14 @@ export default class Card {
       .querySelector("#card-template")
       .content.querySelector(".card")
       .cloneNode(true);
-
     this._cardImageEl = this._cardElement.querySelector(".card__image");
     this._cardTitleEl = this._cardElement.querySelector(".card__title");
     this._trashBtnEl = this._cardElement.querySelector(".card__button-trash");
     this._likeBtnEl = this._cardElement.querySelector(".card__button-like");
-    // set the path to the image to the link field of the object
     this._cardImageEl.src = this._link;
-    // set the image alt text to the name field of the object
     this._cardImageEl.alt = this._name;
-    // set the card title to the name field of the object, too
     this._cardTitleEl.textContent = this._name;
-    // set event listensers
     this._setEventListeners();
-    // return the card
     return this._cardElement;
   }
 }

@@ -196,5 +196,3 @@ initialCards.forEach((cardData) => {
 // Torrent Mountains link: https://cdn.pixabay.com/photo/2023/12/06/08/41/mountain-8433234_1280.jpg
 // Hunter Peak link: https://cdn.pixabay.com/photo/2024/02/12/16/05/hunter-peak-8568915_1280.jpg
 // Keysville link: https://cdn.pixabay.com/photo/2023/08/22/21/18/mountain-8207212_1280.jpg
-
-// const editFormVaildator = new FormValidator(config, profileEditForm);
