@@ -30,8 +30,12 @@ export default class FormValidator {
   }
 
   _disableSubmitButton() {
-    this._submitButton.classList.add("modal__save-button_disabled");
+    this._submitButton.classList.add(this._inactiveButtonClass);
     this._submitButton.disabled = true;
+  }
+
+  disableSubmitButton() {
+    this._disableSubmitButton();
   }
 
   _enableSubmitButton() {
@@ -52,8 +56,8 @@ export default class FormValidator {
   }
 
   _setEventListeners() {
-    this._inputEls = [...this._form.querySelectorAll(".js-modal-input")];
-    this._submitButton = this._form.querySelector(".modal__save-button");
+    this._inputEls = [...this._form.querySelectorAll(this._inputSelector)];
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
     this._inputEls.forEach((inputEl) => {
       inputEl.addEventListener("input", (evt) => {
         this._checkInputValidity(inputEl);
