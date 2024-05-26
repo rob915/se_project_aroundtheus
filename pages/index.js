@@ -1,4 +1,4 @@
-import Card from "../components/Card.js";
+import Card from "../components/Card2.js";
 import FormValidator from "../components/FormVaildator.js";
 
 // ! ||--------------------------------------------------------------------------------||
@@ -109,6 +109,7 @@ function getCardElement(cardData) {
 function renderCard(cardElement, container) {
   container.prepend(cardElement);
 }
+
 function openProfileForm() {
   editFormVaildator.resetValidation();
   profileTitleInput.value = profileTitle.textContent;
