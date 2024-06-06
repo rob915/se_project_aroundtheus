@@ -1,4 +1,4 @@
-import Card from "../components/Card.js";
+import Card from "../components/Object.js";
 import FormValidator from "../components/FormVaildator.js";
 
 // ! ||--------------------------------------------------------------------------------||
