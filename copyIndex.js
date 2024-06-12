@@ -1,10 +1,11 @@
-import Card from "../components/Card.js";
-import FormValidator from "../components/FormVaildator.js";
+import Card from "./components/Card.js";
+import FormValidator from "./components/FormVaildator.js";
+import Section from "./Section.js";
+import "./pages/index.css";
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                 Card Data Array                                ||
 // ! ||--------------------------------------------------------------------------------||
-
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -85,6 +86,8 @@ const editFormVaildator = new FormValidator(
 editFormVaildator.enableValidation();
 const addFormVaildator = new FormValidator(validationSettings, cardAddForm);
 addFormVaildator.enableValidation();
+
+const cardSection = new Section({ renderer: () => {}, selector: });
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                   Functions                                    ||

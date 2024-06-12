@@ -28,8 +28,9 @@ export default class Card {
   }
 
   getView() {
-    this._cardElement = this._cardSelector.content
-      .querySelector(".card")
+    this._cardElement = document
+      .querySelector("#card-template")
+      .content.querySelector(".card")
       .cloneNode(true);
     this._cardImageEl = this._cardElement.querySelector(".card__image");
     this._cardTitleEl = this._cardElement.querySelector(".card__title");
