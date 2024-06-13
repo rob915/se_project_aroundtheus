@@ -14,10 +14,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 const cardSection = new Section(
   {
     items: initialCards,
-    renderer: (item) => {
-      const cardEl = new Card(item, selectors.cardTemplate, handleImageClick);
-      cardSection.addItem(cardEl.getView());
-    },
+    renderer: renderCard,
   },
   selectors.cardSection
 );
@@ -27,11 +24,11 @@ cardSection.renderItems(initialCards);
 const cardAddPopupWithForm = new PopupWithForm("#card-add", (values) => {
   const newTitle = values.title;
   const newLink = values.description;
-  const newCardData = getCardElement({
+  const newCardData = {
     name: newTitle,
     link: newLink,
-  });
-  renderCard(newCardData, constants.cardListEl);
+  };
+  renderCard(newCardData);
   constants.cardAddForm.reset();
   addFormVaildator.disableSubmitButton();
 });
@@ -85,13 +82,9 @@ addFormVaildator.enableValidation();
 // ! ||                                   Functions                                    ||
 // ! ||--------------------------------------------------------------------------------||
 
-function getCardElement(cardData) {
-  const card = new Card(cardData, constants.cardTemplate, handleImageClick);
-  return card.getView();
-}
-
-function renderCard(cardElement, container) {
-  container.prepend(cardElement);
+function renderCard(item) {
+  const cardEl = new Card(item, selectors.cardTemplate, handleImageClick);
+  cardSection.addItem(cardEl.getView());
 }
 
 function openProfileForm() {
@@ -102,21 +95,6 @@ function openProfileForm() {
 
 function handleImageClick(cardData) {
   imagePopup.open(cardData);
-}
-
-function closeModalOnRemoteClick(evt) {
-  if (
-    evt.target === evt.currentTarget ||
-    evt.target.classList.contains("modal__close-button")
-  ) {
-    closeModal(evt.currentTarget);
-  }
-}
-
-function closeModalEsc(evt) {
-  if (evt.key === "Escape") {
-    closeModal(document.querySelector(".modal_opened"));
-  }
 }
 
 // ! ||--------------------------------------------------------------------------------||
