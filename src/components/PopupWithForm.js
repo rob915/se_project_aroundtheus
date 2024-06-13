@@ -31,11 +31,3 @@ export default class PopupWithForm extends Popup {
     });
   }
 }
-
-// index.js
-
-const newCardPopup = new PopupWithForm("#card-add", () => {
-  e.preventDefault();
-});
-newCardPopup.open();
-newCardPopup.close();
