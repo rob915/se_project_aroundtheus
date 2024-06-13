@@ -33,39 +33,18 @@ export const initialCards = [
   },
 ];
 
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                            Global variables                                    ||
+// ! ||--------------------------------------------------------------------------------||
+
 export const selectors = {
   cardSection: ".cards__list",
   cardTemplate: ".card-template",
 };
 
-// ! ||--------------------------------------------------------------------------------||
-// ! ||                            Global variables                                    ||
-// ! ||--------------------------------------------------------------------------------||
-
 const profile = document.querySelector(".profile");
 const cardAdd = document.querySelector("#card-add");
 const imageModal = document.querySelector("#image-modal");
-// const profileEditButton = profile.querySelector(".profile__edit-button");
-// const profileTitle = profile.querySelector(".profile__title");
-// const profileDescription = profile.querySelector(".profile__description");
-
-// const cardListEl = document.querySelector(".cards__list");
-// const cardTemplate = document.querySelector("#card-template");
-// const cardAddButton = profile.querySelector("#card-add-button");
-
-// const profileEdit = document.querySelector("#profile-edit");
-// const profileEditForm = document.forms["profile-edit-form"];
-// const profileTitleInput = document.querySelector("#profile-edit-title-input");
-// const profileDescriptionInput = document.querySelector(
-//   "#profile-edit-description-input"
-// );
-
-// const cardAddForm = document.forms["card-add-form"];
-// const cardTitleInput = cardAdd.querySelector("#card-add-title-input");
-// const cardImageInput = cardAdd.querySelector("#card-add-link-input");
-
-// const imageModalImage = imageModal.querySelector("#image-modal-image");
-// const imageModalSubText = imageModal.querySelector("#image-modal-sub-text");
 
 export const constants = {
   profile: profile,
