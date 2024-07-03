@@ -107,6 +107,22 @@ constants.cardAddButton.addEventListener("click", () =>
 );
 
 // ! ||--------------------------------------------------------------------------------||
+// ! ||                          Communication with the sever                          ||
+// ! ||--------------------------------------------------------------------------------||
+
+fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+  headers: {
+    authorization: "abdb82ec-617f-444e-a982-59b4dab15f22",
+  },
+})
+  .then((res) => res.json())
+  .then((result) => {
+    console.log(result);
+  });
+
+// Unique Token "abdb82ec-617f-444e-a982-59b4dab15f22"
+
+// ! ||--------------------------------------------------------------------------------||
 // ! ||                              Random Mountain Links                             ||
 // ! ||--------------------------------------------------------------------------------||
 
