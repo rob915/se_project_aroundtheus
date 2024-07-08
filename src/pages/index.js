@@ -1,25 +1,52 @@
 import "./index.css";
-import { initialCards, selectors, constants } from "../utils/constants.js";
+import { selectors, constants } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormVaildator.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import Api from "../components/Api.js";
+
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                          Communication with the sever                          ||
+// ! ||--------------------------------------------------------------------------------||
+
+// const baseUrl = "https://api-test.pa7lux.ru/streams";
+
+// fucntion get todos() {
+//   fetch('https://api-test.pa7lux.ru/streams')
+//   .then((response) => {
+//     console.log(response);
+//   })
+// }
+
+// fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+//   headers: {
+//     authorization: "abdb82ec-617f-444e-a982-59b4dab15f22",
+//   },
+// })
+//   .then((res) => res.json())
+//   .then((result) => {
+//     console.log(result);
+//   });
+
+// function loadImage(imageSrc) {
+//   const img = document.createElement("img");
+//   img.src = imageSrc;
+//   return img;
+// }
+
+// const image = loadImage();
+// document.body(image);
+
+// Unique Token "abdb82ec-617f-444e-a982-59b4dab15f22"
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                              class instantiations                              ||
 // ! ||--------------------------------------------------------------------------------||
 
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: renderCard,
-  },
-  selectors.cardSection
-);
-
-cardSection.renderItems(initialCards);
+// cardSection.renderItems(initialCards);
 
 const cardAddPopupWithForm = new PopupWithForm("#card-add", (values) => {
   const newTitle = values.title;
@@ -28,7 +55,9 @@ const cardAddPopupWithForm = new PopupWithForm("#card-add", (values) => {
     name: newTitle,
     link: newLink,
   };
-  renderCard(newCardData);
+  api.addCard(newCardData).then(() => {
+    renderCard(newCardData);
+  });
   constants.cardAddForm.reset();
   addFormVaildator.disableSubmitButton();
 });
@@ -53,6 +82,31 @@ imagePopup.setEventListeners();
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
+});
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  authToken: "e254619e-7195-4851-a257-08f38c23767e",
+});
+
+let cardSection;
+
+api.getInitialCards().then((cards) => {
+  cardSection = new Section(
+    {
+      items: cards,
+      renderer: renderCard,
+    },
+    selectors.cardSection
+  );
+  cardSection.renderItems();
+});
+
+api.getUserInfo().then((userData) => {
+  userInfo.setUserInfo({
+    name: userData.name,
+    job: userData.about,
+  });
 });
 
 // ! ||--------------------------------------------------------------------------------||
@@ -105,22 +159,6 @@ constants.profileEditButton.addEventListener("click", openProfileForm);
 constants.cardAddButton.addEventListener("click", () =>
   cardAddPopupWithForm.open()
 );
-
-// ! ||--------------------------------------------------------------------------------||
-// ! ||                          Communication with the sever                          ||
-// ! ||--------------------------------------------------------------------------------||
-
-fetch("https://around-api.en.tripleten-services.com/v1/cards", {
-  headers: {
-    authorization: "abdb82ec-617f-444e-a982-59b4dab15f22",
-  },
-})
-  .then((res) => res.json())
-  .then((result) => {
-    console.log(result);
-  });
-
-// Unique Token "abdb82ec-617f-444e-a982-59b4dab15f22"
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                              Random Mountain Links                             ||
