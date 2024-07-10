@@ -2,68 +2,72 @@ export default class Api {
   constructor({ baseUrl, authToken }) {
     this._baseUrl = baseUrl;
     this._authToken = authToken;
+    this._headers = {
+      authorization: this._authToken,
+      "Content-Type": "application/json",
+    };
   }
 
   //GET https://around-api.en.tripleten-services.com/v1/cards
   //AUTH Token "abdb82ec-617f-444e-a982-59b4dab15f22"
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: {
-        authorization: this._authToken,
-      },
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-      )
-      .catch((err) => {
-        console.error(err); // log the error to the console
-      });
+      headers: this._headers,
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        authorization: this._authToken,
-      },
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-      )
-      .catch((err) => {
-        console.error(err);
-      });
+      headers: this._headers,
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
+  }
+
+  updateProfileInfo(name, about) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ name, about }),
+    });
   }
 
   addCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: {
-        authorization: this._authToken,
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({ name, link }),
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-      )
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
   }
 
   removeCard(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}`, {
       method: "DELETE",
-      headers: {
-        authorization: this._authToken,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-      )
-      .catch((err) => {
-        console.error(err);
-      });
+      headers: this._headers,
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
+  }
+
+  addLike() {
+    return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
+  }
+
+  removeLike() {
+    return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
   }
 }

@@ -7,6 +7,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Api from "../components/Api.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                          Communication with the sever                          ||
@@ -55,9 +56,16 @@ const cardAddPopupWithForm = new PopupWithForm("#card-add", (values) => {
     name: newTitle,
     link: newLink,
   };
-  api.addCard(newCardData).then(() => {
-    renderCard(newCardData);
-  });
+  api
+    .addCard(newCardData)
+    .then((data) => {
+      renderCard(data);
+      cardAddPopupWithForm.close();
+    })
+    .catch((err) => {
+      console.error(err);
+      alert(`${err}, Could not add new card`);
+    });
   constants.cardAddForm.reset();
   addFormVaildator.disableSubmitButton();
 });
@@ -67,13 +75,19 @@ cardAddPopupWithForm.setEventListeners();
 const profileEditSubmitPopupWithForm = new PopupWithForm(
   "#profile-edit",
   (values) => {
-    constants.profileTitle.textContent = values.title;
-    constants.profileDescription.textContent = values.description;
-    profileEditSubmitPopupWithForm.close();
+    api.updateProfileInfo(values.title, values.description).then((res) => {
+      console.log(res);
+      constants.profileTitle.textContent = values.title;
+      constants.profileDescription.textContent = values.description;
+      profileEditSubmitPopupWithForm.close();
+    });
   }
 );
 
 profileEditSubmitPopupWithForm.setEventListeners();
+
+const deleteCardPopup = new PopupWithConfirmation("#card-delete-conformation");
+deleteCardPopup.setEventListeners();
 
 const imagePopup = new PopupWithImage("#image-modal");
 
@@ -91,23 +105,35 @@ const api = new Api({
 
 let cardSection;
 
-api.getInitialCards().then((cards) => {
-  cardSection = new Section(
-    {
-      items: cards,
-      renderer: renderCard,
-    },
-    selectors.cardSection
-  );
-  cardSection.renderItems();
-});
-
-api.getUserInfo().then((userData) => {
-  userInfo.setUserInfo({
-    name: userData.name,
-    job: userData.about,
+api
+  .getInitialCards()
+  .then((cards) => {
+    cardSection = new Section(
+      {
+        items: cards,
+        renderer: renderCard,
+      },
+      selectors.cardSection
+    );
+    cardSection.renderItems();
+  })
+  .catch((err) => {
+    console.error(err);
+    alert(`${err}, Could not load cards`);
   });
-});
+
+api
+  .getUserInfo()
+  .then((userData) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      job: userData.about,
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+    alert(`${err}, Could not load user info`);
+  });
 
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                   Validation                                   ||
@@ -136,8 +162,30 @@ addFormVaildator.enableValidation();
 // ! ||                                   Functions                                    ||
 // ! ||--------------------------------------------------------------------------------||
 
+function handleDeleteCardClick(card) {
+  deleteCardPopup.open();
+  deleteCardPopup.setSubmitAction(() => {
+    console.log(card.getId());
+    api
+      .removeCard(card.getId())
+      .then(() => {
+        card.handleDeleteCard();
+        deleteCardPopup.close();
+      })
+      .catch((err) => {
+        console.error(err);
+        alert(`${err}, Could not delete card`);
+      });
+  });
+}
+
 function renderCard(item) {
-  const cardEl = new Card(item, selectors.cardTemplate, handleImageClick);
+  const cardEl = new Card(
+    item,
+    selectors.cardTemplate,
+    handleImageClick,
+    handleDeleteCardClick
+  );
   cardSection.addItem(cardEl.getView());
 }
 
