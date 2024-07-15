@@ -31,7 +31,19 @@ export default class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ name, about }),
-    });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
+  }
+
+  updateProfilePhoto(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ avatar }),
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
   }
 
   addCard({ name, link }) {
@@ -53,7 +65,7 @@ export default class Api {
     );
   }
 
-  addLike() {
+  addLike(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
       method: "PUT",
       headers: this._headers,
@@ -62,7 +74,7 @@ export default class Api {
     );
   }
 
-  removeLike() {
+  removeLike(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
       method: "DELETE",
       headers: this._headers,

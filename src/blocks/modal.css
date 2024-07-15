@@ -64,7 +64,7 @@
 .modal__form {
   position: relative;
   margin: 0;
-  padding: 36px;
+  padding: 34px 36px 36px 36px;
   border: none;
 }
 
@@ -98,6 +98,14 @@
   line-height: 29px;
 }
 
+.modal__heading-avatar {
+  line-height: 23px;
+}
+
+.modal_heading-delete-card {
+  line-height: 23px;
+}
+
 .modal__input {
   display: block;
   width: 100%;
@@ -113,10 +121,16 @@
 
 .modal__input_name_title {
   margin-top: 54px;
+  padding: 0;
 }
 
 .modal__input_name_description {
   margin-top: 30px;
+  padding: 0;
+}
+
+.modal__input-avatar {
+  margin-top: 54px;
 }
 
 .modal-input-error {
@@ -125,6 +139,7 @@
 
 .modal__save-button {
   margin-top: 48px;
+  padding: 0;
   width: 100%;
   height: 50px;
   border: none;
@@ -135,6 +150,10 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 22px;
+}
+
+.modal__save-button-delete-card {
+  margin-top: 38px;
 }
 
 .modal__save-button:hover {

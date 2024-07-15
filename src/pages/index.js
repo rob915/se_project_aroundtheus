@@ -10,44 +10,8 @@ import Api from "../components/Api.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 // ! ||--------------------------------------------------------------------------------||
-// ! ||                          Communication with the sever                          ||
-// ! ||--------------------------------------------------------------------------------||
-
-// const baseUrl = "https://api-test.pa7lux.ru/streams";
-
-// fucntion get todos() {
-//   fetch('https://api-test.pa7lux.ru/streams')
-//   .then((response) => {
-//     console.log(response);
-//   })
-// }
-
-// fetch("https://around-api.en.tripleten-services.com/v1/cards", {
-//   headers: {
-//     authorization: "abdb82ec-617f-444e-a982-59b4dab15f22",
-//   },
-// })
-//   .then((res) => res.json())
-//   .then((result) => {
-//     console.log(result);
-//   });
-
-// function loadImage(imageSrc) {
-//   const img = document.createElement("img");
-//   img.src = imageSrc;
-//   return img;
-// }
-
-// const image = loadImage();
-// document.body(image);
-
-// Unique Token "abdb82ec-617f-444e-a982-59b4dab15f22"
-
-// ! ||--------------------------------------------------------------------------------||
 // ! ||                              class instantiations                              ||
 // ! ||--------------------------------------------------------------------------------||
-
-// cardSection.renderItems(initialCards);
 
 const cardAddPopupWithForm = new PopupWithForm("#card-add", (values) => {
   const newTitle = values.title;
@@ -75,16 +39,31 @@ cardAddPopupWithForm.setEventListeners();
 const profileEditSubmitPopupWithForm = new PopupWithForm(
   "#profile-edit",
   (values) => {
+    profileEditSubmitPopupWithForm.submitButton.textContent = "Saving...";
     api.updateProfileInfo(values.title, values.description).then((res) => {
-      console.log(res);
-      constants.profileTitle.textContent = values.title;
-      constants.profileDescription.textContent = values.description;
+      profileEditSubmitPopupWithForm.submitButton.textContent = "Submit";
+      constants.profileTitle.textContent = res.name;
+      constants.profileDescription.textContent = res.about;
       profileEditSubmitPopupWithForm.close();
     });
   }
 );
 
 profileEditSubmitPopupWithForm.setEventListeners();
+
+const updateProfileAvatarPopupWithForm = new PopupWithForm(
+  "#update-avatar",
+  (value) => {
+    updateProfileAvatarPopupWithForm.submitButton.textContent = "Saving...";
+    api.updateProfilePhoto(value.description).then((res) => {
+      updateProfileAvatarPopupWithForm.submitButton.textContent = "Submit";
+      constants.profileAvatar.src = res.avatar;
+      updateProfileAvatarPopupWithForm.close();
+    });
+  }
+);
+
+updateProfileAvatarPopupWithForm.setEventListeners();
 
 const deleteCardPopup = new PopupWithConfirmation("#card-delete-conformation");
 deleteCardPopup.setEventListeners();
@@ -96,6 +75,7 @@ imagePopup.setEventListeners();
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
+  avatarSelector: "#profile-avatar",
 });
 
 const api = new Api({
@@ -129,6 +109,9 @@ api
       name: userData.name,
       job: userData.about,
     });
+    userInfo.setUserAvatar({
+      avatar: userData.avatar,
+    });
   })
   .catch((err) => {
     console.error(err);
@@ -158,6 +141,12 @@ const addFormVaildator = new FormValidator(
 );
 addFormVaildator.enableValidation();
 
+const avatarFormValidator = new FormValidator(
+  validationSettings,
+  constants.updateAvatarForm
+);
+avatarFormValidator.enableValidation();
+
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                   Functions                                    ||
 // ! ||--------------------------------------------------------------------------------||
@@ -165,10 +154,11 @@ addFormVaildator.enableValidation();
 function handleDeleteCardClick(card) {
   deleteCardPopup.open();
   deleteCardPopup.setSubmitAction(() => {
-    console.log(card.getId());
+    deleteCardPopup.submitButton.textContent = "Saving...";
     api
       .removeCard(card.getId())
       .then(() => {
+        deleteCardPopup.submitButton.textContent = "Yes";
         card.handleDeleteCard();
         deleteCardPopup.close();
       })
@@ -180,13 +170,28 @@ function handleDeleteCardClick(card) {
 }
 
 function renderCard(item) {
-  const cardEl = new Card(
+  const card = new Card(
     item,
     selectors.cardTemplate,
     handleImageClick,
-    handleDeleteCardClick
+    handleDeleteCardClick,
+    () => {
+      if (!card.isLiked) {
+        api.addLike(card._id).then((res) => {
+          card.setIsLiked(res.isLiked);
+        });
+      } else {
+        api.removeLike(card._id).then((res) => {
+          card.setIsLiked(res.isLiked);
+        });
+      }
+    }
   );
-  cardSection.addItem(cardEl.getView());
+  cardSection.addItem(card.getView());
+}
+
+function handleLikeClick() {
+  api.addLike();
 }
 
 function openProfileForm() {
@@ -207,7 +212,9 @@ constants.profileEditButton.addEventListener("click", openProfileForm);
 constants.cardAddButton.addEventListener("click", () =>
   cardAddPopupWithForm.open()
 );
-
+constants.profileAvatarButton.addEventListener("click", () => {
+  updateProfileAvatarPopupWithForm.open();
+});
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                              Random Mountain Links                             ||
 // ! ||--------------------------------------------------------------------------------||

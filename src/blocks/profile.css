@@ -7,6 +7,12 @@
   column-gap: 30px;
 }
 
+.profile__image-container {
+  display: inline-block;
+  position: relative;
+  border-radius: 50%;
+}
+
 .profile__image {
   border-radius: 50%;
   width: 120px;
@@ -14,6 +20,30 @@
   object-fit: cover;
   background-position: center;
   flex-shrink: 0;
+  padding: 0;
+  display: block;
+}
+
+.profile__image-button {
+  position: absolute;
+  border-radius: 50%;
+  border: none;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  color: rgba(255, 255, 255, 1);
+  background: transparent url(../images/pencil.svg) center no-repeat;
+  background-size: 26px 26px;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  padding: 0;
+}
+
+.profile__image-button:hover {
+  visibility: visible;
+  cursor: pointer;
+  opacity: 1;
 }
 
 .profile__info {
@@ -117,6 +147,10 @@
   }
 
   .profile__image {
+    margin: 38.25px 0 26.25px;
+  }
+
+  .profile__image-button {
     margin: 38.25px 0 26.25px;
   }
 
