@@ -37,7 +37,7 @@ export default class Card {
     this._likeBtnEl.classList.toggle("card__button-like_active", liked);
   }
 
-  initializeCard() {
+  initializeCardLike() {
     if (this.isLiked) {
       this._likeBtnEl.classList.add("card__button-like_active");
     }
@@ -60,7 +60,7 @@ export default class Card {
     this._cardImageEl.src = this._link;
     this._cardImageEl.alt = this._name;
     this._cardTitleEl.textContent = this._name;
-    this.initializeCard();
+    this.initializeCardLike();
     this._setEventListeners();
     return this._cardElement;
   }

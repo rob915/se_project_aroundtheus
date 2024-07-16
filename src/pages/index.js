@@ -179,7 +179,6 @@ function renderCard(item) {
       if (!card.isLiked) {
         api.addLike(card._id).then((res) => {
           card.setIsLiked(res.isLiked);
-          console.log(card);
         });
       } else {
         api.removeLike(card._id).then((res) => {
