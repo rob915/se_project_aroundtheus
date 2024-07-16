@@ -37,6 +37,12 @@ export default class Card {
     this._likeBtnEl.classList.toggle("card__button-like_active", liked);
   }
 
+  initializeCard() {
+    if (this.isLiked) {
+      this._likeBtnEl.classList.add("card__button-like_active");
+    }
+  }
+
   handleDeleteCard() {
     this._cardElement.remove();
     this._cardElement = null;
@@ -54,6 +60,7 @@ export default class Card {
     this._cardImageEl.src = this._link;
     this._cardImageEl.alt = this._name;
     this._cardTitleEl.textContent = this._name;
+    this.initializeCard();
     this._setEventListeners();
     return this._cardElement;
   }
