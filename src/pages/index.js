@@ -1,5 +1,9 @@
 import "./index.css";
-import { selectors, constants } from "../utils/constants.js";
+import {
+  selectors,
+  constants,
+  validationSettings,
+} from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormVaildator.js";
 import Section from "../components/Section.js";
@@ -20,32 +24,47 @@ const cardAddPopupWithForm = new PopupWithForm("#card-add", (values) => {
     name: newTitle,
     link: newLink,
   };
+  cardAddPopupWithForm._submitBtn.textContent = "Saving...";
   api
     .addCard(newCardData)
     .then((data) => {
       renderCard(data);
       cardAddPopupWithForm.close();
+      constants.cardAddForm.reset();
+      addFormVaildator.disableSubmitButton();
     })
     .catch((err) => {
       console.error(err);
       alert(`${err}, Could not add new card`);
+    })
+    .finally(() => {
+      cardAddPopupWithForm._submitBtn.textContent = "Save";
     });
-  constants.cardAddForm.reset();
-  addFormVaildator.disableSubmitButton();
 });
 
 cardAddPopupWithForm.setEventListeners();
 
+const userInfo = new UserInfo({
+  nameSelector: ".profile__title",
+  jobSelector: ".profile__description",
+  avatarSelector: "#profile-avatar",
+});
+
 const profileEditSubmitPopupWithForm = new PopupWithForm(
   "#profile-edit",
   (values) => {
-    profileEditSubmitPopupWithForm.submitButton.textContent = "Saving...";
-    api.updateProfileInfo(values.title, values.description).then((res) => {
-      profileEditSubmitPopupWithForm.submitButton.textContent = "Submit";
-      constants.profileTitle.textContent = res.name;
-      constants.profileDescription.textContent = res.about;
-      profileEditSubmitPopupWithForm.close();
-    });
+    profileEditSubmitPopupWithForm._submitBtn.textContent = "Saving...";
+    api
+      .updateProfileInfo(values.title, values.description)
+      .then((res) => {
+        profileEditSubmitPopupWithForm._submitBtn.textContent = "Submit";
+        userInfo.setUserInfo(res);
+        profileEditSubmitPopupWithForm.close();
+      })
+      .catch((err) => {
+        console.error(err);
+        alert(`${err}, Could not load profile info`);
+      });
   }
 );
 
@@ -54,12 +73,20 @@ profileEditSubmitPopupWithForm.setEventListeners();
 const updateProfileAvatarPopupWithForm = new PopupWithForm(
   "#update-avatar",
   (value) => {
-    updateProfileAvatarPopupWithForm.submitButton.textContent = "Saving...";
-    api.updateProfilePhoto(value.description).then((res) => {
-      updateProfileAvatarPopupWithForm.submitButton.textContent = "Submit";
-      constants.profileAvatar.src = res.avatar;
-      updateProfileAvatarPopupWithForm.close();
-    });
+    updateProfileAvatarPopupWithForm._submitBtn.textContent = "Saving...";
+    api
+      .updateProfilePhoto(value.description)
+      .then((res) => {
+        userInfo.setUserAvatar(res);
+        updateProfileAvatarPopupWithForm.close();
+      })
+      .catch((err) => {
+        console.error(err);
+        alert(`${err}, Could not load profile avatar`);
+      })
+      .finally(() => {
+        updateProfileAvatarPopupWithForm._submitBtn.textContent = "Save";
+      });
   }
 );
 
@@ -71,12 +98,6 @@ deleteCardPopup.setEventListeners();
 const imagePopup = new PopupWithImage("#image-modal");
 
 imagePopup.setEventListeners();
-
-const userInfo = new UserInfo({
-  nameSelector: ".profile__title",
-  jobSelector: ".profile__description",
-  avatarSelector: "#profile-avatar",
-});
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -105,13 +126,8 @@ api
 api
   .getUserInfo()
   .then((userData) => {
-    userInfo.setUserInfo({
-      name: userData.name,
-      job: userData.about,
-    });
-    userInfo.setUserAvatar({
-      avatar: userData.avatar,
-    });
+    userInfo.setUserInfo(userData);
+    userInfo.setUserAvatar(userData);
   })
   .catch((err) => {
     console.error(err);
@@ -121,14 +137,6 @@ api
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                   Validation                                   ||
 // ! ||--------------------------------------------------------------------------------||
-
-const validationSettings = {
-  inputSelector: ".js-modal-input",
-  submitButtonSelector: ".modal__save-button",
-  inactiveButtonClass: "modal__save-button_disabled",
-  inputErrorClass: "modal-input-error",
-  errorClass: "modal-error-visible",
-};
 
 const editFormVaildator = new FormValidator(
   validationSettings,
@@ -158,13 +166,15 @@ function handleDeleteCardClick(card) {
     api
       .removeCard(card.getId())
       .then(() => {
-        deleteCardPopup.submitButton.textContent = "Yes";
         card.handleDeleteCard();
         deleteCardPopup.close();
       })
       .catch((err) => {
         console.error(err);
         alert(`${err}, Could not delete card`);
+      })
+      .finally(() => {
+        deleteCardPopup.submitButton.textContent = "Yes";
       });
   });
 }
@@ -188,10 +198,6 @@ function renderCard(item) {
     }
   );
   cardSection.addItem(card.getView());
-}
-
-function handleLikeClick() {
-  api.addLike();
 }
 
 function openProfileForm() {

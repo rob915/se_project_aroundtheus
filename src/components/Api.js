@@ -8,22 +8,20 @@ export default class Api {
     };
   }
 
-  //GET https://around-api.en.tripleten-services.com/v1/cards
-  //AUTH Token "abdb82ec-617f-444e-a982-59b4dab15f22"
+  _checkResOk(res) {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  }
+
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-    );
+    }).then(this._checkResOk);
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-    );
+    }).then(this._checkResOk);
   }
 
   updateProfileInfo(name, about) {
@@ -31,9 +29,7 @@ export default class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ name, about }),
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-    );
+    }).then(this._checkResOk);
   }
 
   updateProfilePhoto(avatar) {
@@ -41,9 +37,7 @@ export default class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ avatar }),
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-    );
+    }).then(this._checkResOk);
   }
 
   addCard({ name, link }) {
@@ -51,35 +45,27 @@ export default class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({ name, link }),
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-    );
+    }).then(this._checkResOk);
   }
 
   removeCard(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-    );
+    }).then(this._checkResOk);
   }
 
   addLike(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
       method: "PUT",
       headers: this._headers,
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-    );
+    }).then(this._checkResOk);
   }
 
   removeLike(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-    );
+    }).then(this._checkResOk);
   }
 }

@@ -7,6 +7,14 @@ export const selectors = {
   cardTemplate: ".card-template",
 };
 
+export const validationSettings = {
+  inputSelector: ".js-modal-input",
+  submitButtonSelector: ".modal__save-button",
+  inactiveButtonClass: "modal__save-button_disabled",
+  inputErrorClass: "modal-input-error",
+  errorClass: "modal-error-visible",
+};
+
 const profile = document.querySelector(".profile");
 const cardAdd = document.querySelector("#card-add");
 const imageModal = document.querySelector("#image-modal");
