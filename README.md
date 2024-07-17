@@ -2,11 +2,11 @@
 
 ### Overview
 
-This project is a basic struture for an interactive page for users to create a profile and post pictures and descriptions about what the images represent.
+This project is an interactive page where the user can add cards to the page, edit the profile information, and change the avatar image .
 
 **Technologies**
 
-The technologies implemented in this project are First HTML and CSS coding organized using a Flat File BEM Structure. Within the CSS styles, declarations such as grid-templates-areas help to structure the main content by reducing and expanding the amount of rows and columns contained according to the screen width utilized to access the content. There are also several media queries implented at specific breakpoints to keep the page elements from conflicting as the page shrinks in width.
+The technologies utilized in this project begin with HTML and CSS programing to create the elements and styling on the page. All code is organized using a Flat File BEM Structure. Within the CSS styles, properties such as grid-templates-areas help to structure the main content by reducing and expanding the amount of rows and columns contained according to the screen width utilized to access the content. There are also several media queries implented at specific breakpoints to keep the page elements from conflicting as the page shrinks in width. Next JavaScript programming comes into play, making the page responsive to the User's interaction. First, I begun by giving the user the ability to manipulate the content on the page by way of forms which passed the user's input to various functions that rendered them to the page locally. I created several classes and sub-classes to create code that was reusable in several instances from rendering things to the page to updating User profile information. Then I began converting the code to communicate with the server. I created an API class that sent various Fetch requests to the API with methods such as: GET, POST, PATCH, and REMOVE. Finally I set up several .then, .catch, and .finally blocks to interact with the responses from the server to both render or remove things from the page and update the server with desired information. the cards on the page even have fucntioning like buttons and delete buttons. Which update the server in regards to the like status and which cards should be romoved from the page.
 
 **Figma**
 
