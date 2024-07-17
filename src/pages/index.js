@@ -57,7 +57,7 @@ const profileEditSubmitPopupWithForm = new PopupWithForm(
     api
       .updateProfileInfo(values.title, values.description)
       .then((res) => {
-        profileEditSubmitPopupWithForm._submitBtn.textContent = "Submit";
+        profileEditSubmitPopupWithForm._submitBtn.textContent = "Save";
         userInfo.setUserInfo(res);
         profileEditSubmitPopupWithForm.close();
       })
