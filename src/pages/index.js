@@ -24,7 +24,7 @@ const cardAddPopupWithForm = new PopupWithForm("#card-add", (values) => {
     name: newTitle,
     link: newLink,
   };
-  cardAddPopupWithForm._submitBtn.textContent = "Saving...";
+  cardAddPopupWithForm.submitBtn.textContent = "Saving...";
   api
     .addCard(newCardData)
     .then((data) => {
@@ -38,7 +38,7 @@ const cardAddPopupWithForm = new PopupWithForm("#card-add", (values) => {
       alert(`${err}, Could not add new card`);
     })
     .finally(() => {
-      cardAddPopupWithForm._submitBtn.textContent = "Save";
+      cardAddPopupWithForm.submitBtn.textContent = "Save";
     });
 });
 
@@ -53,17 +53,19 @@ const userInfo = new UserInfo({
 const profileEditSubmitPopupWithForm = new PopupWithForm(
   "#profile-edit",
   (values) => {
-    profileEditSubmitPopupWithForm._submitBtn.textContent = "Saving...";
+    profileEditSubmitPopupWithForm.submitBtn.textContent = "Saving...";
     api
       .updateProfileInfo(values.title, values.description)
       .then((res) => {
-        profileEditSubmitPopupWithForm._submitBtn.textContent = "Save";
         userInfo.setUserInfo(res);
         profileEditSubmitPopupWithForm.close();
       })
       .catch((err) => {
         console.error(err);
         alert(`${err}, Could not load profile info`);
+      })
+      .finally(() => {
+        profileEditSubmitPopupWithForm.submitBtn.textContent = "Save";
       });
   }
 );
@@ -73,7 +75,7 @@ profileEditSubmitPopupWithForm.setEventListeners();
 const updateProfileAvatarPopupWithForm = new PopupWithForm(
   "#update-avatar",
   (value) => {
-    updateProfileAvatarPopupWithForm._submitBtn.textContent = "Saving...";
+    updateProfileAvatarPopupWithForm.submitBtn.textContent = "Saving...";
     api
       .updateProfilePhoto(value.description)
       .then((res) => {
@@ -85,7 +87,7 @@ const updateProfileAvatarPopupWithForm = new PopupWithForm(
         alert(`${err}, Could not load profile avatar`);
       })
       .finally(() => {
-        updateProfileAvatarPopupWithForm._submitBtn.textContent = "Save";
+        updateProfileAvatarPopupWithForm.submitBtn.textContent = "Save";
       });
   }
 );
@@ -188,11 +190,17 @@ function renderCard(item) {
     () => {
       if (!card.isLiked) {
         api.addLike(card._id).then((res) => {
-          card.setIsLiked(res.isLiked);
+          card.setIsLiked(res.isLiked).catch((err) => {
+            console.error(err);
+            alert(`${err}, Could not establish like status`);
+          });
         });
       } else {
         api.removeLike(card._id).then((res) => {
-          card.setIsLiked(res.isLiked);
+          card.setIsLiked(res.isLiked).catch((err) => {
+            console.error(err);
+            alert(`${err}, Could not establish like status`);
+          });
         });
       }
     }
