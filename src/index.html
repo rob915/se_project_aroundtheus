@@ -18,11 +18,19 @@
 
       <main class="content">
         <section class="profile page__section">
-          <img
-            src="<%=require('./images/jacques-cousteau.png')%>"
-            alt="Avatar"
-            class="profile__image"
-          />
+          <div class="profile__image-container">
+            <img
+              src="<%=require('./images/jacques-cousteau.png')%>"
+              alt="Avatar"
+              class="profile__image"
+              id="profile-avatar"
+            />
+            <button
+              class="profile__image-button"
+              id="profile__image-button"
+              type="button"
+            ></button>
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Jacques Costeau</h1>
             <button class="profile__edit-button" type="button"></button>
@@ -137,6 +145,74 @@
             disabled
           >
             Save
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="update-avatar">
+      <div class="modal__container">
+        <button
+          class="modal__close-button"
+          type="button"
+          id="update-avatar-close-button"
+        ></button>
+        <form class="modal__form js-modal-form" id="update-avatar-form">
+          <h2
+            class="modal__heading modal__heading-avatar"
+            id="card-add-heading"
+          >
+            Change Profile Picture
+          </h2>
+
+          <input
+            type="url"
+            name="description"
+            id="update-avatar-input"
+            placeholder="Image link"
+            class="modal__input modal__input_name_description js-modal-input modal__input-avatar"
+            required
+          />
+          <span
+            class="modal__form-error-msg"
+            id="update-avatar-input-error"
+          ></span>
+          <button
+            type="submit"
+            class="modal__save-button modal__save-button_disabled"
+            id="update-avatar-save-button"
+            disabled
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="card-delete-conformation">
+      <div class="modal__container">
+        <button
+          class="modal__close-button"
+          type="button"
+          id="card-delete-conformation-close-button"
+        ></button>
+        <form
+          class="modal__form js-modal-form"
+          id="card-delete-conformation-form"
+        >
+          <h2
+            class="modal__heading modal_heading-delete-card"
+            id="card-delete-conformation-modal-heading"
+          >
+            Are you sure?
+          </h2>
+
+          <button
+            type="submit"
+            class="modal__save-button modal__save-button-delete-card"
+            id="card-delete-conformation-submit-button"
+          >
+            Yes
           </button>
         </form>
       </div>
