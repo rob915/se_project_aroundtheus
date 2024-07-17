@@ -35,7 +35,6 @@ const cardAddPopupWithForm = new PopupWithForm("#card-add", (values) => {
     })
     .catch((err) => {
       console.error(err);
-      alert(`${err}, Could not add new card`);
     })
     .finally(() => {
       cardAddPopupWithForm.submitBtn.textContent = "Save";
@@ -62,7 +61,6 @@ const profileEditSubmitPopupWithForm = new PopupWithForm(
       })
       .catch((err) => {
         console.error(err);
-        alert(`${err}, Could not load profile info`);
       })
       .finally(() => {
         profileEditSubmitPopupWithForm.submitBtn.textContent = "Save";
@@ -84,7 +82,6 @@ const updateProfileAvatarPopupWithForm = new PopupWithForm(
       })
       .catch((err) => {
         console.error(err);
-        alert(`${err}, Could not load profile avatar`);
       })
       .finally(() => {
         updateProfileAvatarPopupWithForm.submitBtn.textContent = "Save";
@@ -122,7 +119,6 @@ api
   })
   .catch((err) => {
     console.error(err);
-    alert(`${err}, Could not load cards`);
   });
 
 api
@@ -133,7 +129,6 @@ api
   })
   .catch((err) => {
     console.error(err);
-    alert(`${err}, Could not load user info`);
   });
 
 // ! ||--------------------------------------------------------------------------------||
@@ -173,7 +168,6 @@ function handleDeleteCardClick(card) {
       })
       .catch((err) => {
         console.error(err);
-        alert(`${err}, Could not delete card`);
       })
       .finally(() => {
         deleteCardPopup.submitButton.textContent = "Yes";
@@ -189,19 +183,23 @@ function renderCard(item) {
     handleDeleteCardClick,
     () => {
       if (!card.isLiked) {
-        api.addLike(card._id).then((res) => {
-          card.setIsLiked(res.isLiked).catch((err) => {
+        api
+          .addLike(card._id)
+          .then((res) => {
+            card.setIsLiked(res.isLiked);
+          })
+          .catch((err) => {
             console.error(err);
-            alert(`${err}, Could not establish like status`);
           });
-        });
       } else {
-        api.removeLike(card._id).then((res) => {
-          card.setIsLiked(res.isLiked).catch((err) => {
+        api
+          .removeLike(card._id)
+          .then((res) => {
+            card.setIsLiked(res.isLiked);
+          })
+          .catch((err) => {
             console.error(err);
-            alert(`${err}, Could not establish like status`);
           });
-        });
       }
     }
   );
